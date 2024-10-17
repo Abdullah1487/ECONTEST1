@@ -1,0 +1,69 @@
+Question 1:
+  
+  Null Hypothesis: There is no relationship between people recieveing(or not) emotional/social support and their age ranges (which I have decided to go with (65,75] and (75,85])))
+Alternate Hypothesis: There is a relationship between people recieveing(or not) emotional/social support and their age ranges (which I have decided to go with (65,75] and (75,85])))
+
+
+
+ people_65_to_75 <- 9308 + 2913
+people_75_85 <- 2956 + 677
+
+
+support_first_group <- c(rep(1, 2913), rep(0, 9308) )
+support_second_group <- c(rep(1, 677), rep(0, 2956))
+
+
+
+
+t_test <- t.test(support_first_group, support_second_group, var.equal = TRUE)
+print(t_test)
+t_test$stderr
+
+So my p-value was 4.686e-11. This is much lower than the level of significance (0.05) which leads to me rejecting the null hypothesis because it is indicating that there is a relationship between the emotional/support a person recieves and their age range. The t-stat that I found was 6.5852. This suggests that there was a significant difference in terms of the amount of emotional/social support that one age range recieved compared to the other. The confidence interval was 0.03653097 and 0.06749469. My sample estimates were 0.2383602 and 0.1863474. This shows that one age range had more support than the other.For the estimates, the results showed that about 24% of one age range recieved/lacked emotional support while it was only 19% for the other age range. The standard error that I got was 0.007898452 which suggets that my results are likely accurate.
+
+
+#Question 2:
+  
+
+
+no_bach_no_wfh <- 25064  
+no_bach_wfh <- 5677      
+
+
+prop_test_not_4yr <- prop.test(c(no_bach_wfh, no_bach_no_wfh), c(no_bach_wfh + no_bach_no_wfh, no_bach_wfh + no_bach_no_wfh))
+
+
+
+print(prop_test_not_4yr)
+
+
+
+
+So for the results of the non- 4 year degrees , the t- stat was 24451, the p- value was 2.2e-16 , the confidence interval was -0.6368230 and -0.6244892, the sample estimates were 0.1846719 and 0.8153281. The t-stat suggested that the two groups had a big difference. The p-value, as it is lower than 0.05 tells us that there is a significant differenc in the two groups when comparing people who lack/recieve emotional/support who work from home against who do not work from home. The confidence interval tells us that people who do not work from home will report more lonliness than people who do work from home. Both these groups are from the data set of not 4 yr degree. Which I labelled as "no_bach."
+
+
+#Question 3
+
+The subgroup I will use is Race (Black and White) and whether or not Race has an impact on the level of support they recieve.
+
+
+#Question 4
+Household_Pulse_data$SOCIAL1_numeric <- as.numeric(factor(Household_Pulse_data$SOCIAL1, 
+                                                          levels = c("Never", "Rarely", "Sometimes", "Usually", "Always")))
+
+
+subset_data <- Household_Pulse_data %>%
+  filter(RRACE %in% c("White", "Black"))
+
+
+t_test_results <- t.test(Social1_numeric ~ RRACE, data = subset_data)
+
+
+print(t_test_results)
+
+#Question5
+
+lm_model <- lm(SOCIAL1_numeric ~ RRACE, data = subset_data)
+  
+ 
+  summary(lm_model)
